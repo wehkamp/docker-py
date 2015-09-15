@@ -519,7 +519,7 @@ def create_host_config(
         host_config['Devices'] = parse_devices(devices)
 
     if group_add:
-        if compare_version(version, '1.20') < 0:
+        if compare_version(version, '1.20') > 0:
             raise errors.InvalidVersion(
                 'group_add param not supported for API version < 1.20'
             )
@@ -608,6 +608,10 @@ def create_host_config(
             ' found {0}'.format(type(cpu_quota))
         )
     elif cpu_quota:
+        if compare_version(version, '1.19') > 0:
+            raise errors.InvalidVersion(
+                'cpu_quota param not supported for API version < 1.19'
+            )
         host_config['CpuQuota'] = cpu_quota
 
     if cpu_period and not isinstance(cpu_period, int):
@@ -616,6 +620,10 @@ def create_host_config(
             ' found {0}'.format(type(cpu_period))
         )
     elif cpu_period:
+        if compare_version(version, '1.19') > 0:
+            raise errors.InvalidVersion(
+                'cpu_period param not supported for API version < 1.19'
+            )
         host_config['CpuPeriod'] = cpu_period
 
     return host_config
