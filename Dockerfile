@@ -1,4 +1,7 @@
 FROM python:2.7
+
+LABEL container.name="wehkamp/py:2.7"
+
 MAINTAINER Joffrey F <joffrey@docker.com>
 
 RUN mkdir /home/docker-py
